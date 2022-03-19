@@ -1,0 +1,44 @@
+use ecommerce
+
+// 3
+db.productos.find()
+db.mensajes.find()
+
+// 4
+db.productos.countDocuments()
+db.mensajes.countDocuments()
+
+// 5
+
+// a)
+db.productos.insertOne( {name: "Espiritu acompañante",price: 4200,image:"https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Fairy-512.png",description: "Espiritu protector y curativo",code: 11,stock: 5,timestamp: Date.now()} )
+
+// b)
+//i
+db.productos.find({ price: {$lt: 1000 } }, {name:true, _id:false})
+//ii
+db.productos.find({ $and: [{ price: {$gt: 1000} }, { price: {$lt: 3000} }] }, {name:true, _id:false})
+//iii
+db.productos.find({ price: {$gt: 3000 } }, {name:true, _id:false})
+//iv
+db.productos.find({}, {name:true, _id:false}).sort({price: 1}).limit(1).skip(2)
+
+// c)
+db.productos.updateMany({}, { $set: {stock: 100} });
+
+// d)
+db.productos.updateMany({ price: { $gt:4000 } }, { $set: {stock: 0} });
+
+// e
+db.productos.deleteMany( { price: { $lt:1000 }} );
+
+// 6
+use admin
+db.createUser({ user: 'pepe', pwd: 'asd456', roles: [{ role: 'read', db: 'ecommerce' }] })
+
+db.productos.insertOne({mje: "hola puedo meter coto acá?"})
+//Mje: MongoServerError: not authorized on ecommerce to execute command
+
+
+
+
